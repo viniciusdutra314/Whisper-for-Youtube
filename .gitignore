@@ -1,6 +1,7 @@
 #ignore audios and videos
 *.mp3
 *.mp4
+*.srt
 teste.py
 # Byte-compiled / optimized / DLL files
 __pycache__/
