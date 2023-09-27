@@ -1,6 +1,7 @@
 import os
 path_response=input("You want to save the subtitles locally or on google drive? (l =local, g=google): ")
-path="/content/drive/MyDrive/whisper_for_all/" if path_response[0].lower()=="g" else "/content/legendas/"
+path_subtitles="/content/drive/MyDrive/whisper_for_all/legendas/" if path_response[0].lower()=="g" else "/content/legendas/"
+path_videos="/content/drive/MyDrive/whisper_for_all/videos/" if path_response[0].lower()=="g" else "/content/videos/"
 if path_response=="g":
     from google.colab import drive
     drive.mount('/content/drive')
@@ -14,12 +15,10 @@ while True:
         links.append(link)
 
 from youtube_downloader import*
-if not os.path.exists("/content/audios"):
-   os.mkdir("/content/audios")
 videos=playlist_expander(links)
-download_all_audios(videos)
+download_all_videos(videos,path_videos)
 from whisper_requests import *
-run_whisper(quality,path)
+run_whisper(quality,path_subtitles,path_videos)
 
 
 

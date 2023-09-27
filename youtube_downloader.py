@@ -12,22 +12,22 @@ def playlist_expander(links : list) -> list:
   videos=links
   return videos
 
-def download_single_audio(link : "str or list") -> list:
+def download_single_video(link,path_videos) -> list:
   yt = pytube.YouTube(link)
   title=yt.title
   title = unidecode(title) #removing special characters
   title = title.translate(title.maketrans('','',string.punctuation))
   title=title.replace(" ","_")
-  title=title.lower() +".mp3"
-  audio_stream = yt.streams.filter(only_audio=True).first()
-  audio_stream.download(filename="/content/audios/"+title)
+  title=title.lower() +".mp4"
+  video_stream = yt.streams.get_highest_resolution()
+  video_stream.download(filename=path_videos+title)
   titulos.append(title)
 
-def download_all_audios(videos):
+def download_all_videos(videos,path_videos):
   if isinstance(videos[0],str):
       for video in videos:
-          download_single_audio(video)
+          download_single_video(video,path_videos)
   else:
       for playlists in videos:
           for video in playlists:
-              download_single_audio(video)
+              download_single_video(video,path_videos)
